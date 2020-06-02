@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>FundamentosCsharpTp3</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FundamentosCsharpTp3.Dados\FundamentosCsharpTp3.Dados.csproj" />
+      <ProjectReference Include="..\FundamentosCsharpTp3.Data\FundamentosCsharpTp3.Data.csproj" />
+    </ItemGroup>
+
+</Project>
