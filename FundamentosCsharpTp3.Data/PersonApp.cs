@@ -18,9 +18,11 @@ namespace FundamentosCsharpTp3.Data
 
         public static IEnumerable<Person> ShowByName(string name)
         {
+            var lowerName = name.ToLower();
             var personsBirthday =
                 from Person person in birthdays
-                where name == person.Name || name == person.SurName || name == $"{person.Name} {person.SurName}"
+                where lowerName == person.Name.ToLower() || lowerName == person.SurName.ToLower() 
+                                || lowerName == $"{person.Name.ToLower()} {person.SurName.ToLower()}"
                 select person;
 
             return personsBirthday;

@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FundamentosCsharpTp3.Dados\FundamentosCsharpTp3.Dados.csproj" />
       <ProjectReference Include="..\FundamentosCsharpTp3.Data\FundamentosCsharpTp3.Data.csproj" />
     </ItemGroup>
 
