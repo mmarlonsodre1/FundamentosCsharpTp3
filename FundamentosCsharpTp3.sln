@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundamentosCsharpTp3.Models
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundamentosCsharpTp3.Data", "FundamentosCsharpTp3.Data\FundamentosCsharpTp3.Data.csproj", "{A6FEB64D-1B8F-4D3A-AF75-413E1CA602ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundamentosCsharpTp3.WebApplication", "FundamentosCsharpTp3.WebApplication\FundamentosCsharpTp3.WebApplication.csproj", "{503BD9F5-73AF-48E0-A324-933635CAF71A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,10 +32,15 @@ Global
 		{A6FEB64D-1B8F-4D3A-AF75-413E1CA602ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6FEB64D-1B8F-4D3A-AF75-413E1CA602ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6FEB64D-1B8F-4D3A-AF75-413E1CA602ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{503BD9F5-73AF-48E0-A324-933635CAF71A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{503BD9F5-73AF-48E0-A324-933635CAF71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{503BD9F5-73AF-48E0-A324-933635CAF71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{503BD9F5-73AF-48E0-A324-933635CAF71A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6D67DE7C-F7DB-4605-9A17-2E6A7E6D379D} = {72721008-1138-4BC7-92AF-2D289F92D9FA}
 		{00A5E099-B390-4DFF-8360-DD10E384AED5} = {0F8E05E7-B96C-40FD-9CEA-EA254C9C5E90}
 		{A6FEB64D-1B8F-4D3A-AF75-413E1CA602ED} = {C707C313-C206-4159-BE48-0F79A454EB6B}
+		{503BD9F5-73AF-48E0-A324-933635CAF71A} = {72721008-1138-4BC7-92AF-2D289F92D9FA}
 	EndGlobalSection
 EndGlobal

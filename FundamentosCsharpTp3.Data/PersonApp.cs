@@ -15,6 +15,25 @@ namespace FundamentosCsharpTp3.Data
             var personBirthday = new Person(name, surName, birthday);
             birthdays.Add(personBirthday);
         }
+        
+        public static void AddBirthday(Person person)
+        {
+            birthdays.Add(person);
+        }
+
+        public static void RemoveBirthday(Guid id)
+        {
+            birthdays.Remove(ShowById(id));
+        }
+
+        public static Person ShowById(Guid id)
+        {
+            var personsBirthday =
+                from Person person in birthdays
+                where id == person.Id
+                select person;
+            return personsBirthday.FirstOrDefault();
+        }
 
         public static IEnumerable<Person> ShowByName(string name)
         {
@@ -25,6 +44,14 @@ namespace FundamentosCsharpTp3.Data
                                 || lowerName == $"{person.Name.ToLower()} {person.SurName.ToLower()}"
                 select person;
 
+            return personsBirthday;
+        }
+
+        public static IEnumerable<Person> showAllBirthdays()
+        {
+            var personsBirthday =
+                from Person person in birthdays
+                select person;
             return personsBirthday;
         }
     }

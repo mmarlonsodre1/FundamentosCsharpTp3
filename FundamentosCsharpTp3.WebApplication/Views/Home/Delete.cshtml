@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Delete";
+}
+
+@model FundamentosCsharpTp3.Models.Person
+
+<h1>Gostaria de excluir o aniversariante @Model.Name @Model.SurName?</h1>
+
+<form method="post" asp-action="DeleteBirthday" asp-controller="Home" asp-route-id="@Model.Id">
+    <a href="/" class="btn btn-default">Cancelar</a>
+    <button type="submit" class="btn btn-danger">Excluir Aniversariante</button>
+</form>
+
+
+

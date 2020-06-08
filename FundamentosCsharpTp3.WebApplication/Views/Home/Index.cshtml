@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+@model IEnumerable<FundamentosCsharpTp3.Models.Person>
+
+<h1>Aniversariantes</h1>
+@using (Html.BeginForm(actionName: "Search", controllerName: "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        <input type="text" id="name" name="name" placeholder="Nome">
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar Aniversariante</button>
+}
+
+<br/>
+<br/>
+<br/>
+
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+<table width="100%" border="1">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Próximo Aniversário</th>
+        <th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var person in Model)
+    {
+        <tr>
+            <td>@person.Name @person.SurName</td>
+            <td>@person.NextBirthday.Date</td>
+            <td>
+                <a class="btn btn-warning btn-sm" href="/Home/Edit?id=@person.Id">Editar Aniversariante</a>
+                <a class="btn btn-danger btn-sm" href="/Home/Delete?id=@person.Id">Excluir Aniversariante</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<br />
+
+<div>
+    <a class="btn btn-primary" asp-controller="Home" asp-action="New">Cadastrar Nova Tarefa</a>
+</div>
