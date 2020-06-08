@@ -57,20 +57,9 @@ namespace FundamentosCsharpTp3
                 Write("Dados da pessoa");
                 foreach (var person in persons)
                 {
-                    var timeNow = DateTime.Now;
-                    var birthdayYear =
-                        DateTime.Parse($"{person.Birthday.Day}/{person.Birthday.Month}/{DateTime.Now.Year}");
-                    var timeRemain = birthdayYear.Subtract(timeNow);
-                    
-                    if (timeRemain.Days < 1 )
-                    {
-                        birthdayYear = DateTime.Parse($"{person.Birthday.Day}/{person.Birthday.Month}/{DateTime.Now.Year + 1}");
-                        timeRemain = birthdayYear.Subtract(timeNow);
-                    }
-                    
                     Write($"Nome Completo: {person.Name} {person.SurName}");
                     Write($"Data de Aniversário: {person.Birthday}");
-                    Write($"Faltam {timeRemain.Days} dias para esse aniversário\n");
+                    Write($"Faltam {person.NextBirthdayInDays.Days} dias para esse aniversário\n");
                 }
                 BackMenu();
             }
