@@ -44,7 +44,7 @@ namespace FundamentosCsharpTp3.Data
                                 || lowerName == $"{person.Name.ToLower()} {person.SurName.ToLower()}"
                 select person;
 
-            return personsBirthday;
+            return personsBirthday.OrderBy(person => person.NextBirthday);
         }
 
         public static IEnumerable<Person> showAllBirthdays()
@@ -52,7 +52,7 @@ namespace FundamentosCsharpTp3.Data
             var personsBirthday =
                 from Person person in birthdays
                 select person;
-            return personsBirthday;
+            return personsBirthday.OrderBy(person => person.NextBirthday);
         }
     }
 }

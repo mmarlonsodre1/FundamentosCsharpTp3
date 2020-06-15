@@ -27,7 +27,7 @@ namespace FundamentosCsharpTp3.Models
                     DateTime.Parse($"{Birthday.Day}/{Birthday.Month}/{DateTime.Now.Year}");
                 var timeRemain = birthdayYear.Subtract(timeNow);
                     
-                if (timeRemain.Days < 1 )
+                if (timeRemain.Days < 0 )
                 {
                     birthdayYear = DateTime.Parse($"{Birthday.Day}/{Birthday.Month}/{DateTime.Now.Year + 1}");
                     timeRemain = birthdayYear.Subtract(timeNow);
@@ -38,7 +38,7 @@ namespace FundamentosCsharpTp3.Models
         }
         public DateTime NextBirthday
         {
-            get => DateTime.Now.Add(NextBirthdayInDays);
+            get => NextBirthdayInDays.Milliseconds < 0 ? DateTime.Now : DateTime.Now.AddDays(NextBirthdayInDays.Days + 1);
             set => NextBirthday = value;
         }
 

@@ -5,6 +5,17 @@
 @model IEnumerable<FundamentosCsharpTp3.Models.Person>
 
 <h1>Aniversariantes</h1>
+@using (Html.BeginForm(actionName: "Search", controllerName: "FullBirthdays", FormMethod.Post))
+{
+    <div class="form-group">
+        <input type="text" id="name" name="name" placeholder="Nome">
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar Aniversariante</button>
+}
+
+<br/>
+<br/>
+<br/>
 
 @if (!String.IsNullOrEmpty(ViewBag.Message))
 {
@@ -28,8 +39,8 @@
             <td>@person.Name @person.SurName</td>
             <td>@person.NextBirthday.Date</td>
             <td>
-                <a class="btn btn-warning btn-sm" href="/Home/Edit?id=@person.Id">Editar Aniversariante</a>
-                <a class="btn btn-danger btn-sm" href="/Home/Delete?id=@person.Id">Excluir Aniversariante</a>
+                <a class="btn btn-warning btn-sm" href="/FullBirthdays/Edit?id=@person.Id">Editar Aniversariante</a>
+                <a class="btn btn-danger btn-sm" href="/FullBirthdays/Delete?id=@person.Id">Excluir Aniversariante</a>
             </td>
         </tr>
     }
@@ -39,5 +50,5 @@
 <br />
 
 <div>
-    <a class="btn btn-primary" asp-controller="Home" asp-action="New">Cadastrar Nova Tarefa</a>
+    <a class="btn btn-primary" asp-controller="FullBirthdays" asp-action="New">Cadastrar Novo Aniversariante</a>
 </div>
