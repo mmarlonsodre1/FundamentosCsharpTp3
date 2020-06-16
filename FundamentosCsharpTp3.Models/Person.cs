@@ -51,5 +51,13 @@ namespace FundamentosCsharpTp3.Models
             SurName = surName;
             Birthday = birthday;
         }
+        
+        public Person(Guid id, string name, string surName, DateTime birthday)
+        {
+            Id = id;
+            Name = name;
+            SurName = surName;
+            Birthday = birthday;
+        }
     }
 }

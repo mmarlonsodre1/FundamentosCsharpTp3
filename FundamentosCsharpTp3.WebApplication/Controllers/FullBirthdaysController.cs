@@ -47,7 +47,6 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
         {
             if (ModelState.IsValid == false)
                 return View();
-            model.Id = Guid.NewGuid();
             PersonApp.AddBirthday(model);
         
             return RedirectToAction("Index", "FullBirthdays", new { message = "Aniversariante cadastrado com sucesso" });

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FundamentosCsharpTp3.Models;
 
@@ -8,16 +9,63 @@ namespace FundamentosCsharpTp3.Data
 {
     public class PersonApp
     {
-        static ArrayList birthdays = new ArrayList();
-        
-        public static void AddBirthday(string name, string surName, DateTime birthday)
+        private static ArrayList birthdays = new ArrayList();
+
+        public static void GetAllBirthdaysInFile()
         {
-            var personBirthday = new Person(name, surName, birthday);
-            birthdays.Add(personBirthday);
+            string nomeDoArquivo = GetFileName();
+
+            FileStream arquivo;
+            if (!File.Exists(nomeDoArquivo))
+            {
+                arquivo = File.Create(nomeDoArquivo);
+                arquivo.Close();
+            }
+
+            string resultado = File.ReadAllText(nomeDoArquivo);
+
+            string[] birthdaysInFile = resultado.Split(';');
+
+
+            for (int i = 0; i < birthdaysInFile.Length - 1; i++)
+            {
+                string[] personBirthdays = birthdaysInFile[i].Split(',');
+                
+                Guid id = Guid.Parse(personBirthdays[0]);
+                string name = personBirthdays[1];
+                string surname = personBirthdays[2];
+                DateTime date = Convert.ToDateTime(personBirthdays[3]);
+
+                Person funcionario = new Person(id, name, surname, date);
+
+                birthdays.Add(funcionario);
+            }
+        }
+
+        public static void SaveListInFile()
+        {
+            string fileName = GetFileName();
+            File.WriteAllText(fileName, "");
+            foreach (Person birthday in birthdays)
+            {
+                var format = $"{birthday.Id},{birthday.Name},{birthday.SurName},{birthday.Birthday.ToString()};";
+                File.AppendAllText(fileName, format);
+            }
+        }
+        
+        private static string GetFileName()
+        {
+            var pastaDesktop = Environment.SpecialFolder.Desktop;
+
+            string localDaPastaDesktop = Environment.GetFolderPath(pastaDesktop);
+            string nomeDoArquivo = @"\dadosDosFuncionariosAtMarlon.txt";
+
+            return localDaPastaDesktop + nomeDoArquivo;
         }
         
         public static void AddBirthday(Person person)
         {
+            person.Id = Guid.NewGuid();
             birthdays.Add(person);
         }
 
