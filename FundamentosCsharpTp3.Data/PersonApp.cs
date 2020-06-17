@@ -67,11 +67,13 @@ namespace FundamentosCsharpTp3.Data
         {
             person.Id = Guid.NewGuid();
             birthdays.Add(person);
+            SaveListInFile();
         }
 
         public static void RemoveBirthday(Guid id)
         {
             birthdays.Remove(ShowById(id));
+            SaveListInFile();
         }
 
         public static Person ShowById(Guid id)

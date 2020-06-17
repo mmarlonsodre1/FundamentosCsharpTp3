@@ -35,7 +35,7 @@ namespace FundamentosCsharpTp3
                 case '2': AddBirthday(); break;
                 case '3': EditBirthday(); break;
                 case '4': RemoveBirthday(); break;
-                case '5': PersonApp.SaveListInFile(); break;
+                case '5': break;
                 default: Write("Opção inexistente"); BackMenu(); break;
             }
         }
