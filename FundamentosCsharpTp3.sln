@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundamentosCsharpTp3.View", "FundamentosCsharpTp3.View\FundamentosCsharpTp3.View.csproj", "{6D67DE7C-F7DB-4605-9A17-2E6A7E6D379D}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundamentosCsharpTp3.View", "FundamentosCsharpTp3.View\FundamentosCsharpTp3.View.csproj", "{6D67DE7C-F7DB-4605-9A17-2E6A7E6D379D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{0F8E05E7-B96C-40FD-9CEA-EA254C9C5E90}"
 EndProject
@@ -8,13 +11,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "View", "View", "{72721008-1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dados", "Dados", "{C707C313-C206-4159-BE48-0F79A454EB6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundamentosCsharpTp3.Models", "FundamentosCsharpTp3.Models\FundamentosCsharpTp3.Models.csproj", "{00A5E099-B390-4DFF-8360-DD10E384AED5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundamentosCsharpTp3.Models", "FundamentosCsharpTp3.Models\FundamentosCsharpTp3.Models.csproj", "{00A5E099-B390-4DFF-8360-DD10E384AED5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundamentosCsharpTp3.Data", "FundamentosCsharpTp3.Data\FundamentosCsharpTp3.Data.csproj", "{A6FEB64D-1B8F-4D3A-AF75-413E1CA602ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundamentosCsharpTp3.Data", "FundamentosCsharpTp3.Data\FundamentosCsharpTp3.Data.csproj", "{A6FEB64D-1B8F-4D3A-AF75-413E1CA602ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundamentosCsharpTp3.WebApplication", "FundamentosCsharpTp3.WebApplication\FundamentosCsharpTp3.WebApplication.csproj", "{503BD9F5-73AF-48E0-A324-933635CAF71A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundamentosCsharpTp3.WebApplication", "FundamentosCsharpTp3.WebApplication\FundamentosCsharpTp3.WebApplication.csproj", "{503BD9F5-73AF-48E0-A324-933635CAF71A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App_Data", "App_Data", "{BDD5AF0E-AD5B-4E86-B122-CD1EDB079E70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{50997063-153B-493F-BA95-58E4A94BBE57}"
+	ProjectSection(SolutionItems) = preProject
+		PersonRepository.cs = PersonRepository.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +47,16 @@ Global
 		{503BD9F5-73AF-48E0-A324-933635CAF71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{503BD9F5-73AF-48E0-A324-933635CAF71A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6D67DE7C-F7DB-4605-9A17-2E6A7E6D379D} = {72721008-1138-4BC7-92AF-2D289F92D9FA}
 		{00A5E099-B390-4DFF-8360-DD10E384AED5} = {0F8E05E7-B96C-40FD-9CEA-EA254C9C5E90}
 		{A6FEB64D-1B8F-4D3A-AF75-413E1CA602ED} = {C707C313-C206-4159-BE48-0F79A454EB6B}
 		{503BD9F5-73AF-48E0-A324-933635CAF71A} = {72721008-1138-4BC7-92AF-2D289F92D9FA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FFB35E1-C76E-4967-ABA8-CD32119355DF}
 	EndGlobalSection
 EndGlobal
