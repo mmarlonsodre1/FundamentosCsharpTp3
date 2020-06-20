@@ -22,17 +22,20 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var person in Model)
-    {
-        <tr>
-            <td>@person.Name @person.SurName</td>
-            <td>@person.NextBirthday.Date</td>
-            <td>
-                <a class="btn btn-warning btn-sm" href="/FullBirthdays/Edit?id=@person.Id">Editar Aniversariante</a>
-                <a class="btn btn-danger btn-sm" href="/FullBirthdays/Delete?id=@person.Id">Excluir Aniversariante</a>
-            </td>
-        </tr>
-    }
+        @if (Model != null)
+        {
+            @foreach (var person in Model)
+            {
+                <tr>
+                    <td>@person.Name @person.SurName</td>
+                    <td>@person.NextBirthday.Date</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" href="/FullBirthdays/Edit?id=@person.Id">Editar Aniversariante</a>
+                        <a class="btn btn-danger btn-sm" href="/FullBirthdays/Delete?id=@person.Id">Excluir Aniversariante</a>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
 

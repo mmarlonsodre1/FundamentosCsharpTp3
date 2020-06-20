@@ -45,6 +45,8 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
         {
             if (ModelState.IsValid == false)
                 return View();
+            
+            model.Id = Guid.NewGuid();
             PersonRepository.Save(model);
         
             return RedirectToAction("Index", "FullBirthdays", new { message = "Aniversariante cadastrado com sucesso" });
@@ -74,8 +76,14 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
         [HttpPost]
         public IActionResult Search(String name)
         {
-            var resultSql = PersonRepository.GetBirthdaysByName(name);
-            return View(resultSql.OrderBy(person => person.NextBirthday));
+            if (name != null)
+            {
+                var resultSql = PersonRepository.GetBirthdaysByName(name);
+                return View(resultSql.OrderBy(person => person.NextBirthday));
+            } else
+            {
+                return View();
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
