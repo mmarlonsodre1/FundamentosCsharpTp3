@@ -1,29 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using FundamentosCsharpTp3.Data;
 using FundamentosCsharpTp3.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using FundamentosCsharpTp3.WebApplication.Models;
+using FundamentosCsharpTp3.WebApplication.Repository;
 
 namespace FundamentosCsharpTp3.WebApplication.Controllers
 {
     public class FullBirthdaysController : Controller
     {
-        private readonly ILogger<FullBirthdaysController> _logger;
-
-        public FullBirthdaysController(ILogger<FullBirthdaysController> logger)
+        private PersonRepository PersonRepository { get; set; }
+        
+        public FullBirthdaysController(PersonRepository personRepository)
         {
-            _logger = logger;
+            PersonRepository = personRepository;
         }
 
         public IActionResult Index(string? message)
         {
             ViewBag.Message = message;
-            return View(PersonApp.showAllBirthdays());
+            var resultSql = PersonRepository.GetAllBirthdays();
+            return View(resultSql.OrderBy(person => person.NextBirthday));
         }
 
         public IActionResult New()
@@ -33,12 +31,12 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
         
         public IActionResult Edit([FromQuery] Guid id)
         {
-            return View(PersonApp.ShowById(id));
+            return View(PersonRepository.GetBirthdayById(id));
         }
         
         public IActionResult Delete([FromQuery] Guid id)
         {
-            return View(PersonApp.ShowById(id));
+            return View(PersonRepository.GetBirthdayById(id));
         }
         
         
@@ -47,7 +45,7 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
         {
             if (ModelState.IsValid == false)
                 return View();
-            PersonApp.AddBirthday(model);
+            PersonRepository.Save(model);
         
             return RedirectToAction("Index", "FullBirthdays", new { message = "Aniversariante cadastrado com sucesso" });
         }
@@ -58,14 +56,7 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
             if (ModelState.IsValid == false)
                 return View();
         
-            var birthdayEdit = PersonApp.ShowById(id);
-        
-            birthdayEdit.Name = model.Name;
-            birthdayEdit.SurName = model.SurName;
-            birthdayEdit.Birthday = model.Birthday;
-            
-            PersonApp.RemoveBirthday(birthdayEdit.Id);
-            PersonApp.AddBirthday(birthdayEdit);
+            PersonRepository.Update(model);
         
             return RedirectToAction("Index", "FullBirthdays", new { message = "Aniversariante editado com sucesso" });
         }
@@ -76,14 +67,15 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
             if (ModelState.IsValid == false)
                 return View();
 
-            PersonApp.RemoveBirthday(id);
+            PersonRepository.Delete(id);
             return RedirectToAction("Index", "FullBirthdays", new { message = "Aniversariante excluído com sucesso" });
         }
         
         [HttpPost]
         public IActionResult Search(String name)
         {
-            return View(PersonApp.ShowByName(name));
+            var resultSql = PersonRepository.GetBirthdaysByName(name);
+            return View(resultSql.OrderBy(person => person.NextBirthday));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

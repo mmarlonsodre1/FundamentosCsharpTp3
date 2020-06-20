@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data.SqlClient;
 
+
 public class PersonRepository
 {
 	private string ConnectionString { get; set; }
@@ -11,7 +12,7 @@ public class PersonRepository
 		this.ConnectionString = configuration.GetConfig.ConnectionString("AtConnectionString");
 	}
 
-	public void Save(Person person)
+	public void Save(Peron person)
     {
 		using(var connection = new SqlConnection(this.ConnectionString))
         {
@@ -20,6 +21,7 @@ public class PersonRepository
 			SqlCommand sqlCommand = connection.CreateCommand();
 			sqlCommand.CommandText = "Insert into Person(Name, SurName, Birthday) values (@P1, @P2, @P3)";
 			sqlCommand.Parameters.AddWithValue("P1", person.Name);
+			sqlCommand.Parameters.AddWithValue("P2", person.)
 
 			sqlCommand.ExecuteNonQuery();
 			connection.Close();
