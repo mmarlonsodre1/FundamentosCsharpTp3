@@ -26,6 +26,15 @@ namespace FundamentosCsharpTp3.WebApplication
         {
             services.AddTransient<PersonRepository>();
             services.AddControllersWithViews();
+
+            services.AddHttpContextAccessor();
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.Name = ".MeuTp.Session";
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +57,8 @@ namespace FundamentosCsharpTp3.WebApplication
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

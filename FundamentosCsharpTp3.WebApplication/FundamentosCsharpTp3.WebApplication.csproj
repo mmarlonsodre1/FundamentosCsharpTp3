@@ -2,9 +2,38 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UserSecretsId>d3ea131f-fc66-42af-b115-e69501fca59c</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Views\NovaPasta1\**" />
+      <Compile Remove="Views\NovaPasta\**" />
+      <Compile Remove="Views\Second\**" />
+      <Content Remove="Views\NovaPasta1\**" />
+      <Content Remove="Views\NovaPasta\**" />
+      <Content Remove="Views\Second\**" />
+      <EmbeddedResource Remove="Views\NovaPasta1\**" />
+      <EmbeddedResource Remove="Views\NovaPasta\**" />
+      <EmbeddedResource Remove="Views\Second\**" />
+      <None Remove="Views\NovaPasta1\**" />
+      <None Remove="Views\NovaPasta\**" />
+      <None Remove="Views\Second\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Controllers\SecondScreenController.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Views\Home\Search.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
     </ItemGroup>
 
@@ -27,10 +56,6 @@
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
       <Content Update="Views\Home\Edit.cshtml">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      </Content>
-      <Content Update="Views\Home\Search.cshtml">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>

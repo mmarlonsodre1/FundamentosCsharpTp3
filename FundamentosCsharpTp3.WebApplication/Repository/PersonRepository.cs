@@ -32,7 +32,8 @@ namespace FundamentosCsharpTp3.WebApplication.Repository
                     Person person = new Person(
                         Guid.Parse(reader["Id"].ToString()), 
                         reader["Name"].ToString(), 
-                        reader["SurName"].ToString(), 
+                        reader["SurName"].ToString(),
+                        reader["Email"].ToString(),
                         DateTime.Parse(reader["Birthday"].ToString()));
                     result.Add(person);
                 }
@@ -60,7 +61,8 @@ namespace FundamentosCsharpTp3.WebApplication.Repository
                     Person person = new Person(
                         Guid.Parse(reader["Id"].ToString()), 
                         reader["Name"].ToString(), 
-                        reader["SurName"].ToString(), 
+                        reader["SurName"].ToString(),
+                        reader["Email"].ToString(),
                         DateTime.Parse(reader["Birthday"].ToString()));
                     result.Add(person);
                 }
@@ -88,6 +90,7 @@ namespace FundamentosCsharpTp3.WebApplication.Repository
                     Guid.Parse(reader["Id"].ToString()),
                     reader["Name"].ToString(),
                     reader["SurName"].ToString(),
+                    reader["Email"].ToString(),
                     DateTime.Parse(reader["Birthday"].ToString()));
 
                     connection.Close();
@@ -106,11 +109,12 @@ namespace FundamentosCsharpTp3.WebApplication.Repository
                 if (connection.State != System.Data.ConnectionState.Open) connection.Open();
 			
                 SqlCommand sqlCommand = connection.CreateCommand();
-                sqlCommand.CommandText = "INSERT INTO Person(Id, Name, SurName, Birthday) VALUES (@P1, @P2, @P3, @P4)";
+                sqlCommand.CommandText = "INSERT INTO Person(Id, Name, SurName, Email, Birthday) VALUES (@P1, @P2, @P3, @P4, @P5)";
                 sqlCommand.Parameters.AddWithValue("P1", person.Id);
                 sqlCommand.Parameters.AddWithValue("P2", person.Name);
                 sqlCommand.Parameters.AddWithValue("P3", person.SurName);
-                sqlCommand.Parameters.AddWithValue("P4", person.Birthday);
+                sqlCommand.Parameters.AddWithValue("P4", person.Email);
+                sqlCommand.Parameters.AddWithValue("P5", person.Birthday);
 
                 sqlCommand.ExecuteNonQuery();
                 connection.Close();
@@ -124,11 +128,12 @@ namespace FundamentosCsharpTp3.WebApplication.Repository
                 if (connection.State != System.Data.ConnectionState.Open) connection.Open();
 			
                 SqlCommand sqlCommand = connection.CreateCommand();
-                sqlCommand.CommandText = "UPDATE Person SET Name = @P1, SurName = @P2, Birthday = @P3 where Id = @P4";
+                sqlCommand.CommandText = "UPDATE Person SET Name = @P1, SurName = @P2, Email = @P3, Birthday = @P4 where Id = @P5";
                 sqlCommand.Parameters.AddWithValue("P1", person.Name);
                 sqlCommand.Parameters.AddWithValue("P2", person.SurName);
-                sqlCommand.Parameters.AddWithValue("P3", person.Birthday);
-                sqlCommand.Parameters.AddWithValue("P4", person.Id);
+                sqlCommand.Parameters.AddWithValue("P3", person.Email);
+                sqlCommand.Parameters.AddWithValue("P4", person.Birthday);
+                sqlCommand.Parameters.AddWithValue("P5", person.Id);
 
                 sqlCommand.ExecuteNonQuery();
                 connection.Close();

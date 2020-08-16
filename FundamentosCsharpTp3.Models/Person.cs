@@ -13,7 +13,10 @@ namespace FundamentosCsharpTp3.Models
         
         [Required(ErrorMessage = "Campo obrigatório")]
         public string SurName { get; set; }
-        
+
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public string Email { get; set; }
+
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Campo obrigatório")]
@@ -51,12 +54,21 @@ namespace FundamentosCsharpTp3.Models
             SurName = surName;
             Birthday = birthday;
         }
-        
+
         public Person(Guid id, string name, string surName, DateTime birthday)
         {
             Id = id;
             Name = name;
             SurName = surName;
+            Birthday = birthday;
+        }
+
+        public Person(Guid id, string name, string surName, string email, DateTime birthday)
+        {
+            Id = id;
+            Name = name;
+            SurName = surName;
+            Email = email;
             Birthday = birthday;
         }
     }

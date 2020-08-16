@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Index";
+    var session = HttpContextAccessor.HttpContext.Session;
+}
+
+@model IEnumerable<FundamentosCsharpTp3.Models.Person>
+
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+<table width="100%" border="1">
+    <thead>
+        <tr>
+            <th>Check</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(session.GetString(person.Id.ToString())))
+                    {
+                        @if (
+                        session.GetString(person.Id.ToString()).Equals("true")
+                        )
+                        {
+                            <input type="checkbox" id="Selected" name="@person.Id.ToString()" checked />
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="Selected" name="@person.Id.ToString()" />
+                        }
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="Selected" name="@person.Id.ToString()" />
+                    }
+                </td>
+                <td>@person.Name @person.SurName</td>
+                <td>@person.Email</td>
+                <td>
+                    <a class="btn btn-warning btn-sm" href="/Home/Edit?id=@person.Id">Editar</a>
+                    <a class="btn btn-danger btn-sm" href="/Home/Delete?id=@person.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div>
+    <a class="btn btn-primary" asp-controller="Home" asp-action="New">Cadastrar</a>
+    <a class="btn btn-primary" asp-action="IndexBirthday">Próxima Página</a>
+</div>
