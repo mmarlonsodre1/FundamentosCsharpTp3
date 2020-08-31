@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace FundamentosCsharpTp3.Models
 {
@@ -26,13 +27,51 @@ namespace FundamentosCsharpTp3.Models
             get
             {
                 var timeNow = DateTime.Now;
-                var birthdayYear =
-                    DateTime.Parse($"{Birthday.Day}/{Birthday.Month}/{DateTime.Now.Year}");
+
+                var birthdayYear = DateTime.Now;
+                try
+                {
+                    birthdayYear = DateTime.ParseExact($"{Birthday.Day}/{Birthday.Month}/{DateTime.Now.Year + 1}", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
+                catch (Exception)
+                {
+                    if (Birthday.Day < 10 && Birthday.Month < 10)
+                    {
+                        birthdayYear = DateTime.ParseExact($"0{Birthday.Day}/0{Birthday.Month}/{DateTime.Now.Year + 1}", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    else if (Birthday.Day < 10 && Birthday.Month > 9)
+                    {
+                        birthdayYear = DateTime.ParseExact($"0{Birthday.Day}/{Birthday.Month}/{DateTime.Now.Year + 1}", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    else
+                    {
+                        birthdayYear = DateTime.ParseExact($"{Birthday.Day}/0{Birthday.Month}/{DateTime.Now.Year + 1}", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+
+                }
+
                 var timeRemain = birthdayYear.Subtract(timeNow);
                     
                 if (timeRemain.Days < 0 )
                 {
-                    birthdayYear = DateTime.Parse($"{Birthday.Day}/{Birthday.Month}/{DateTime.Now.Year + 1}");
+                    try
+                    {
+                        birthdayYear = DateTime.ParseExact($"{Birthday.Day}/{Birthday.Month}/{DateTime.Now.Year + 1}", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    catch (Exception)
+                    {
+                        if (Birthday.Day < 10 && Birthday.Month < 10)
+                        {
+                            birthdayYear = DateTime.ParseExact($"0{Birthday.Day}/0{Birthday.Month}/{DateTime.Now.Year + 1}", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        } else if (Birthday.Day < 10 && Birthday.Month > 9)
+                        {
+                            birthdayYear = DateTime.ParseExact($"0{Birthday.Day}/{Birthday.Month}/{DateTime.Now.Year + 1}", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        } else
+                        {
+                            birthdayYear = DateTime.ParseExact($"{Birthday.Day}/0{Birthday.Month}/{DateTime.Now.Year + 1}", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        }
+                        
+                    }
                     timeRemain = birthdayYear.Subtract(timeNow);
                 }
                 return timeRemain;
