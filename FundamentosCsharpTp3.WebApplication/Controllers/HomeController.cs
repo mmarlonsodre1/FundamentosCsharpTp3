@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Text;
+using FundamentosCsharpTp3.Api.NovaPasta;
 
 namespace FundamentosCsharpTp3.WebApplication.Controllers
 {
@@ -63,19 +64,18 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
             }
         }
 
-        private async Task<Person> postFriend(Person model)
+        private async Task<String> postFriend(Person model)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44338/");
-                var serializedModel = JsonConvert.SerializeObject(model);
+                var serializedModel = JsonConvert.SerializeObject(new Friend(model.Id, model.Name, model.SurName, model.Email, model.Birthday));
                 var content = new StringContent(serializedModel, Encoding.UTF8, "application/json");
                 HttpResponseMessage result = await client.PostAsync("friends", content);
 
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = await result.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Person>(readTask);
+                    return null;
                 }
                 else
                 {
@@ -85,19 +85,18 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
             }
         }
 
-        private async Task<Person> putFriend(Person model)
+        private async Task<String> putFriend(Person model)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44338/");
-                var serializedModel = JsonConvert.SerializeObject(model);
+                var serializedModel = JsonConvert.SerializeObject(new Friend(model.Id, model.Name, model.SurName, model.Email, model.Birthday));
                 var content = new StringContent(serializedModel, Encoding.UTF8, "application/json");
                 HttpResponseMessage result = await client.PutAsync("friends", content);
 
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = await result.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Person>(readTask);
+                    return null;
                 }
                 else
                 {
@@ -106,6 +105,26 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
                 }
             }
         }
+
+        private async Task<String> deleteFriends(Guid id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44338/");
+                HttpResponseMessage result = await client.DeleteAsync($"friends/{id}");
+
+                if (result.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error.");
+                    return null;
+                }
+            }
+        }
+
 
         public IActionResult Index(string? message)
         {
@@ -189,7 +208,7 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
             if (ModelState.IsValid == false)
                 return View();
 
-            PersonRepository.Delete(id);
+            deleteFriends(id);
             return RedirectToAction("Index", "Home", new { message = "excluído com sucesso" });
         }
 

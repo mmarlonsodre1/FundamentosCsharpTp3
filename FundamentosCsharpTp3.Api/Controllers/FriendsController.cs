@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using FundamentosCsharpTp3.Api.NovaPasta;
 using FundamentosCsharpTp3.Models;
 using FundamentosCsharpTp3.WebApplication.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace FundamentosCsharpTp3.Api.Controllers
 {
@@ -46,14 +44,14 @@ namespace FundamentosCsharpTp3.Api.Controllers
         {
             model.Id = Guid.NewGuid();
             PersonRepository.Save(model);
-            return Ok(model);
+            return Ok();
         }
 
         [HttpPut]
         public IActionResult Put([FromBody] Person model)
         {
             PersonRepository.Update(model);
-            return Ok(model);
+            return Ok();
         }
 
         [HttpDelete("{id}")]

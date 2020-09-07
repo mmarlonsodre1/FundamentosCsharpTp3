@@ -7,9 +7,21 @@
     "mssql1": {
       "restored": true,
       "restoreTime": "2020-09-07T17:58:20.5814361Z"
+    },
+    "secrets2": {
+      "restored": true,
+      "restoreTime": "2020-09-07T21:20:25.6096804Z"
     }
   },
   "parameters": {
+    "secrets2.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "facul"
+    },
+    "secrets2.subscriptionId": {
+      "Type": "subscription",
+      "Value": "fb630ce1-617a-4f90-b037-8b14b48d522b"
+    },
     "mssql1.subscriptionId": {
       "Type": "subscription",
       "Value": "fb630ce1-617a-4f90-b037-8b14b48d522b"
