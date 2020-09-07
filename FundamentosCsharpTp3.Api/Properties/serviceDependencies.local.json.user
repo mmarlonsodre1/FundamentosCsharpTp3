@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2020-09-07T17:58:03.8529639Z"
+    },
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2020-09-07T17:58:20.5814361Z"
+    }
+  },
+  "parameters": {
+    "mssql1.subscriptionId": {
+      "Type": "subscription",
+      "Value": "fb630ce1-617a-4f90-b037-8b14b48d522b"
+    },
+    "mssql1.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "facul"
+    }
+  }
+}

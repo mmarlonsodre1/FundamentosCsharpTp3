@@ -5,8 +5,12 @@ using FundamentosCsharpTp3.Models;
 using Microsoft.AspNetCore.Mvc;
 using FundamentosCsharpTp3.WebApplication.Models;
 using FundamentosCsharpTp3.WebApplication.Repository;
-using System.Collections;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System.Text;
 
 namespace FundamentosCsharpTp3.WebApplication.Controllers
 {
@@ -19,16 +23,100 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
             PersonRepository = personRepository;
         }
 
+        private async Task<IEnumerable<Person>> getFriends()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44338/");
+                HttpResponseMessage result = await client.GetAsync("friends");
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = await result.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<Person>>(readTask);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error.");
+                    return Enumerable.Empty<Person>();
+                }
+            }
+        }
+
+        private async Task<Person> getFriendForId(Guid id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44338/");
+                HttpResponseMessage result = await client.GetAsync($"friends/{id}");
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = await result.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Person>(readTask);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error.");
+                    return null;
+                }
+            }
+        }
+
+        private async Task<Person> postFriend(Person model)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44338/");
+                var serializedModel = JsonConvert.SerializeObject(model);
+                var content = new StringContent(serializedModel, Encoding.UTF8, "application/json");
+                HttpResponseMessage result = await client.PostAsync("friends", content);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = await result.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Person>(readTask);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error.");
+                    return null;
+                }
+            }
+        }
+
+        private async Task<Person> putFriend(Person model)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44338/");
+                var serializedModel = JsonConvert.SerializeObject(model);
+                var content = new StringContent(serializedModel, Encoding.UTF8, "application/json");
+                HttpResponseMessage result = await client.PutAsync("friends", content);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = await result.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Person>(readTask);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error.");
+                    return null;
+                }
+            }
+        }
+
         public IActionResult Index(string? message)
         {
             var msg = message;
             return RedirectToAction("IndexBirthday", "Home", new { message = msg });
         }
 
-        public IActionResult IndexBirthday(string? message)
+        public async Task<IActionResult> IndexBirthday(string? message)
         {
             ViewBag.Message = message;
-            var resultSql = PersonRepository.GetAllBirthdays();
+            IEnumerable<Person> resultSql = await getFriends();
             foreach (Person person in resultSql)
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString(person.Id.ToString())))
@@ -39,10 +127,10 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
             return View("Index", resultSql.OrderBy(person => person.NextBirthday));
         }
 
-        public IActionResult IndexEmail(string? message)
+        public async Task<IActionResult> IndexEmail(string? message)
         {
             ViewBag.Message = message;
-            var resultSql = PersonRepository.GetAllBirthdays();
+            IEnumerable<Person> resultSql = await getFriends();
             foreach (Person person in resultSql)
             {
                 if (string.IsNullOrEmpty(HttpContext.Session.GetString(person.Id.ToString())))
@@ -59,42 +147,44 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
             return View();
         }
         
-        public IActionResult Edit([FromQuery] Guid id)
+        public async Task<IActionResult> Edit([FromQuery] Guid id)
         {
-            return View(PersonRepository.GetBirthdayById(id));
+            var friend = await getFriendForId(id);
+            return View(friend);
         }
         
-        public IActionResult Delete([FromQuery] Guid id)
+        public async Task<IActionResult> Delete([FromQuery] Guid id)
         {
-            return View(PersonRepository.GetBirthdayById(id));
+            var friend = await getFriendForId(id);
+            return View(friend);
         }
         
         
         [HttpPost]
-        public IActionResult Save(Person model)
+        public async Task<IActionResult> Save(Person model)
         {
             if (ModelState.IsValid == false)
                 return View();
             
             model.Id = Guid.NewGuid();
-            PersonRepository.Save(model);
+            await postFriend(model);
         
             return RedirectToAction("Index", "Home", new { message = "cadastrado com sucesso" });
         }
         
         [HttpPost]
-        public IActionResult SaveEdit(Guid id, Person model)
+        public async Task<IActionResult> SaveEdit(Guid id, Person model)
         {
             if (ModelState.IsValid == false)
                 return View();
-        
-            PersonRepository.Update(model);
+
+            await putFriend(model);
         
             return RedirectToAction("Index", "Home", new { message = "editado com sucesso" });
         }
         
         [HttpPost]
-        public IActionResult DeleteBirthday(Guid id)
+        public async Task<IActionResult> DeleteBirthday(Guid id)
         {
             if (ModelState.IsValid == false)
                 return View();
@@ -110,9 +200,9 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult HandleSelection(SelectionOptions options)
+        public async Task<IActionResult> HandleSelection(SelectionOptions options)
         {
-            var persons = PersonRepository.GetAllBirthdays();
+            IEnumerable<Person> persons = await getFriends();
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString(options.Id)))
             {
