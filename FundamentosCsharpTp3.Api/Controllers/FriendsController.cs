@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using FundamentosCsharpTp3.Api.NovaPasta;
 using FundamentosCsharpTp3.Models;
 using FundamentosCsharpTp3.WebApplication.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FundamentosCsharpTp3.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class FriendsController : ControllerBase
     {
         private PersonRepository PersonRepository { get; set; }
@@ -19,6 +20,7 @@ namespace FundamentosCsharpTp3.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public List<Friend> Get()
         {
             var resultSql = PersonRepository.GetAllBirthdays(); 
@@ -32,6 +34,7 @@ namespace FundamentosCsharpTp3.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public Friend Get(Guid id)
         {
             var resultSql = PersonRepository.GetBirthdayById(id);
@@ -40,6 +43,7 @@ namespace FundamentosCsharpTp3.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Post([FromBody] Person model)
         {
             model.Id = Guid.NewGuid();
@@ -48,6 +52,7 @@ namespace FundamentosCsharpTp3.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public IActionResult Put([FromBody] Person model)
         {
             PersonRepository.Update(model);
@@ -55,6 +60,7 @@ namespace FundamentosCsharpTp3.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public IActionResult Delete(Guid id)
         {
             PersonRepository.Delete(id);
