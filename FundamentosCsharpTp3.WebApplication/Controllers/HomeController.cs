@@ -4,7 +4,6 @@ using System.Linq;
 using FundamentosCsharpTp3.Models;
 using Microsoft.AspNetCore.Mvc;
 using FundamentosCsharpTp3.WebApplication.Models;
-using FundamentosCsharpTp3.WebApplication.Repository;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using System.Collections.Generic;
@@ -12,23 +11,25 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Text;
 using FundamentosCsharpTp3.Api.NovaPasta;
+using System.Net.Http.Headers;
 
 namespace FundamentosCsharpTp3.WebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private PersonRepository PersonRepository { get; set; }
+        private string BaseURL = "https://csharptpapi.azurewebsites.net/api/";
+        public string token = null;
         
-        public HomeController(PersonRepository personRepository)
-        {
-            PersonRepository = personRepository;
-        }
+        public HomeController()
+        {}
 
         private async Task<IEnumerable<Person>> getFriends()
         {
+            token = HttpContext.Session.GetString("token");
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44338/");
+                client.BaseAddress = new Uri(BaseURL);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage result = await client.GetAsync("friends");
 
                 if (result.IsSuccessStatusCode)
@@ -46,9 +47,11 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
 
         private async Task<Person> getFriendForId(Guid id)
         {
+            token = HttpContext.Session.GetString("token");
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44338/");
+                client.BaseAddress = new Uri(BaseURL);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage result = await client.GetAsync($"friends/{id}");
 
                 if (result.IsSuccessStatusCode)
@@ -66,9 +69,11 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
 
         private async Task<String> postFriend(Person model)
         {
+            token = HttpContext.Session.GetString("token");
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44338/");
+                client.BaseAddress = new Uri(BaseURL);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var serializedModel = JsonConvert.SerializeObject(new Friend(model.Id, model.Name, model.SurName, model.Email, model.Birthday));
                 var content = new StringContent(serializedModel, Encoding.UTF8, "application/json");
                 HttpResponseMessage result = await client.PostAsync("friends", content);
@@ -87,9 +92,11 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
 
         private async Task<String> putFriend(Person model)
         {
+            token = HttpContext.Session.GetString("token");
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44338/");
+                client.BaseAddress = new Uri(BaseURL);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var serializedModel = JsonConvert.SerializeObject(new Friend(model.Id, model.Name, model.SurName, model.Email, model.Birthday));
                 var content = new StringContent(serializedModel, Encoding.UTF8, "application/json");
                 HttpResponseMessage result = await client.PutAsync("friends", content);
@@ -108,9 +115,11 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
 
         private async Task<String> deleteFriends(Guid id)
         {
+            token = HttpContext.Session.GetString("token");
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44338/");
+                client.BaseAddress = new Uri(BaseURL);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage result = await client.DeleteAsync($"friends/{id}");
 
                 if (result.IsSuccessStatusCode)
@@ -130,6 +139,12 @@ namespace FundamentosCsharpTp3.WebApplication.Controllers
         {
             var msg = message;
             return RedirectToAction("IndexBirthday", "Home", new { message = msg });
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("token");
+            return RedirectToAction("Index", "Login", new { message = "Usuário deslogado" });
         }
 
         public async Task<IActionResult> IndexBirthday(string? message)

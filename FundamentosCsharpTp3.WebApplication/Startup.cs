@@ -23,11 +23,12 @@ namespace FundamentosCsharpTp3.WebApplication
             services.AddTransient<PersonRepository>();
             services.AddControllersWithViews();
 
+            services.AddMemoryCache();
             services.AddHttpContextAccessor();
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromDays(365);
                 options.Cookie.Name = ".MeuTp.Session";
                 options.Cookie.IsEssential = true;
             });
@@ -60,7 +61,7 @@ namespace FundamentosCsharpTp3.WebApplication
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Login}/{action=Index}");
             });
         }
     }

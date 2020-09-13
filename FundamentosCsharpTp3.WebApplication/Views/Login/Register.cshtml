@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "New";
+}
+
+@model FundamentosCsharpTp3.Models.User
+
+<h1>Criar Novo Usuário</h1>
+
+@using (Html.BeginForm(actionName: "RegisterUser", controllerName: "Login", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="txtName">Username?</label>
+        @Html.TextBoxFor(x => x.Username)
+        @Html.ValidationMessageFor(x => x.Username)
+    </div>
+    <button type="submit" class="btn btn-primary">Criar novo Usuário</button>
+}

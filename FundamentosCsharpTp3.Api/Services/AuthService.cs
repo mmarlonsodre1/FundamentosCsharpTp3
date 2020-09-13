@@ -36,7 +36,7 @@ namespace FundamentosCsharpTp3.Api.Services
                 {
                     new Claim(ClaimTypes.NameIdentifier, Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(24),
+                Expires = DateTime.UtcNow.AddDays(365),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)), SecurityAlgorithms.HmacSha256Signature)
             };
             SecurityToken Token = TokenHandler.CreateToken(TokenDescriptor);
@@ -53,13 +53,6 @@ namespace FundamentosCsharpTp3.Api.Services
 
             return new AuthenticationReturn { Status = true, Token = token, Id = user.Id };
         }
-    }
-
-    public class AuthenticationReturn
-    {
-        public bool Status { get; set; }
-        public string Token { get; set; }
-        public Guid Id { get; set; }
     }
 
     public class CommonSettings

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using FundamentosCsharpTp3.Api.Services;
 using FundamentosCsharpTp3.Models;
 using FundamentosCsharpTp3.WebApplication.Repository;

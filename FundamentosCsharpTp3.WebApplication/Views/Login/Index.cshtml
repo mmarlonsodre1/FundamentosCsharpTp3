@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+@model FundamentosCsharpTp3.Models.User
+
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+    <br />
+}
+
+<h1>Login</h1>
+
+@using (Html.BeginForm(actionName: "Login", controllerName: "Login", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="txtName">Username?</label>
+        @Html.TextBoxFor(x => x.Username)
+        @Html.ValidationMessageFor(x => x.Username)
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+}
+<br />
+
+<div>
+    <a class="btn btn-primary" asp-controller="Login" asp-action="Register">Cadastrar Novo Usuário</a>
+</div>
+
