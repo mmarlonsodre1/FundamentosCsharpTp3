@@ -3,13 +3,13 @@
     "secrets1": {
       "type": "secrets"
     },
-    "secrets2": {
-      "type": "secrets",
-      "connectionId": "VaultUri"
-    },
     "mssql1": {
       "type": "mssql",
       "connectionId": "AtConnectionString"
+    },
+    "secrets2": {
+      "type": "secrets",
+      "connectionId": "VaultUri"
     }
   }
 }
